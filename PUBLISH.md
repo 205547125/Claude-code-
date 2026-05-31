@@ -30,6 +30,7 @@ Post-install verification:
 
 ```powershell
 claude --version
+cc --version
 ```
 
 Support workflow:
