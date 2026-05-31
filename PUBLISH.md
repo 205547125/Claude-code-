@@ -6,34 +6,36 @@ Repository:
 https://github.com/205547125/Claude-code-
 ```
 
-Files to publish:
+Release tag:
 
 ```text
-install.ps1
-README.md
-PUBLISH.md
+v1.0.0
 ```
 
-Primary user command:
+Release assets:
+
+```text
+Git-2.53.0.2-64-bit.exe
+CC-Switch-v3.13.0-Windows.msi.zip
+```
+
+Main user command:
 
 ```powershell
 irm https://raw.githubusercontent.com/205547125/Claude-code-/main/install.ps1 | iex
 ```
 
-Mainland China fallback entry:
-
-```powershell
-irm https://cdn.jsdelivr.net/gh/205547125/Claude-code-@main/install.ps1 | iex
-```
+Users must run Windows PowerShell as Administrator.
 
 Post-install verification:
 
 ```powershell
+git --version
 claude --version
 cc --version
 ```
 
-Support workflow:
+Support note:
 
-Ask users to rerun the install command and send a screenshot of the red terminal
-error message. Do not ask users to send their API key.
+Ask users for screenshots of terminal errors only. Do not ask users to send API
+keys. API keys should be configured locally in CC-Switch.
