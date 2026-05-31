@@ -36,9 +36,11 @@ iex "& { $(irm https://raw.githubusercontent.com/205547125/Claude-code-/main/ins
 - Installs to the current user's profile:
   - `%USERPROFILE%\.local\share\claude\versions`
   - `%USERPROFILE%\.local\bin\claude.exe`
+  - `%USERPROFILE%\.local\bin\cc.cmd`
 - Backs up and updates `%USERPROFILE%\.claude.json`.
 - Adds `%USERPROFILE%\.local\bin` to user PATH and the current session PATH.
 - Runs `claude --version` to verify the installation.
+- Provides both commands: `claude` and `cc`.
 - Shows an optional local-only guide for cc-switch and third-party providers.
 
 ## Security Boundaries
@@ -88,6 +90,12 @@ Close and reopen PowerShell, then run:
 
 ```powershell
 claude --version
+```
+
+You can also run the shortcut command:
+
+```powershell
+cc --version
 ```
 
 ## Test Matrix
