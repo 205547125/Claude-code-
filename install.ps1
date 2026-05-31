@@ -16,6 +16,7 @@ $InstallBase = Join-Path $env:USERPROFILE ".local\share\claude"
 $VersionsDir = Join-Path $InstallBase "versions"
 $BinDir = Join-Path $env:USERPROFILE ".local\bin"
 $LinkPath = Join-Path $BinDir "claude.exe"
+$CcAliasPath = Join-Path $BinDir "cc.cmd"
 $ConfigPath = Join-Path $env:USERPROFILE ".claude.json"
 $LocksDir = Join-Path $env:USERPROFILE ".local\state\claude\locks"
 $CacheDir = Join-Path $env:USERPROFILE ".cache\claude\staging"
@@ -166,6 +167,19 @@ function Write-ClaudeConfig {
     Set-Content -Path $Path -Value $json -Encoding UTF8
 }
 
+function Write-CcAlias {
+    param(
+        [string]$AliasPath,
+        [string]$ClaudeExePath
+    )
+
+    $content = @"
+@echo off
+"$ClaudeExePath" %*
+"@
+    Set-Content -Path $AliasPath -Value $content -Encoding ASCII
+}
+
 function Ensure-UserPath {
     param([string]$Directory)
 
@@ -285,6 +299,7 @@ function Install-ClaudeCode {
         }
         Move-Item -Force $binaryPath $finalPath
         Copy-Item -Force $finalPath $LinkPath
+        Write-CcAlias -AliasPath $CcAliasPath -ClaudeExePath $LinkPath
 
         if (Test-Path $ConfigPath) {
             $backupPath = Join-Path $BackupDir ".claude.json.backup.$([DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds())"
@@ -313,7 +328,9 @@ function Install-ClaudeCode {
         }
         Write-Host "[OK] Claude Code installed successfully." -ForegroundColor Green
         Write-Info "Command: claude"
+        Write-Info "Shortcut command: cc"
         Write-Info "Location: $LinkPath"
+        Write-Info "Shortcut: $CcAliasPath"
         Write-Info "Version output: $versionOutput"
     }
     catch {
@@ -386,4 +403,4 @@ if (-not $SkipMenu) {
 }
 
 Write-Host ""
-Write-Host "Done. If the claude command is not found, close and reopen PowerShell, then run: claude --version" -ForegroundColor Green
+Write-Host "Done. If claude or cc is not found, close and reopen PowerShell, then run: claude --version" -ForegroundColor Green
